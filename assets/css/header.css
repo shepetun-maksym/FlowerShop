@@ -1,0 +1,676 @@
+:root{
+  --green: #2e8b57;
+  --beige: #f6efe6;
+  --brown: #6f4b32;
+  --muted: #fbf8f6;
+  --text: #2b2b2b;
+  --accent: #b67344;
+  --glass: rgba(255,255,255,0.6);
+}
+
+*{
+  box-sizing:border-box
+}
+
+body{
+  font-family: 'Poppins', system-ui, Arial;
+  color:var(--text);
+  margin:0;
+  background:var(--muted);
+  -webkit-font-smoothing:antialiased
+}
+
+.container{
+  max-width:1180px;
+  margin:0 auto;
+  padding:0 18px
+}
+
+/* ===== КРАСИВЫЙ ХЕДЕР ===== */
+.site-header{
+  background:linear-gradient(180deg, var(--beige) 0%, #faf7f2 100%);
+  backdrop-filter:blur(8px);
+  box-shadow:0 12px 32px rgba(46,139,87,0.08);
+  position:relative;
+  z-index:10001;
+  border-bottom:2px solid rgba(46,139,87,0.06);
+  animation:header-slide-down 0.7s ease-out both
+}
+
+@keyframes header-slide-down{
+  from{
+    transform:translateY(-16px);
+    opacity:0
+  }
+  to{
+    transform:translateY(0);
+    opacity:1
+  }
+}
+
+/* Декоративная линия */
+.site-header::after{
+  content:'';
+  position:absolute;
+  bottom:0;
+  left:0;
+  right:0;
+  height:1px;
+  background:linear-gradient(90deg, transparent, var(--green), transparent);
+  opacity:0.3
+}
+
+/* ===== TOP ROW - КОНТАКТНАЯ ИНФОРМАЦИЯ И ЛОГОТИП ===== */
+.top-row{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:16px;
+  padding:20px 0;
+  overflow:visible;
+  position:relative;
+  z-index:10000;
+  flex-wrap:wrap
+}
+
+.phone-info{
+  display:flex;
+  align-items:center;
+  gap:10px;
+  order:1
+}
+
+.brand-wrap{
+  flex:1;
+  text-align:center;
+  order:2;
+  min-width:200px
+}
+
+.header-actions{
+  display:flex;
+  justify-content:flex-end;
+  order:3
+}
+
+/* Информация о телефоне */
+.phone-info{
+  display:flex;
+  align-items:center;
+  gap:10px;
+  color:rgba(43,43,43,0.85);
+  font-size:14px;
+  font-weight:500;
+  letter-spacing:0.2px
+}
+
+.phone-icon{
+  font-size:18px;
+  color:var(--green);
+  animation:phone-pulse 2s ease-in-out infinite
+}
+
+@keyframes phone-pulse{
+  0%, 100%{transform:scale(1)}
+  50%{transform:scale(1.1)}
+}
+
+.phone-number{
+  font-weight:800;
+  color:var(--brown);
+  letter-spacing:-0.5px
+}
+
+.phone-sub{
+  font-size:12px;
+  color:rgba(111,75,50,0.6);
+  letter-spacing:0.2px
+}
+
+/* ===== ЛОГОТИП И БРЭНД ===== */
+.brand-wrap{
+  text-align:center;
+  animation:brand-entrance 0.9s ease 0.1s both
+}
+
+@keyframes brand-entrance{
+  from{
+    opacity:0;
+    transform:scale(0.95)
+  }
+  to{
+    opacity:1;
+    transform:scale(1)
+  }
+}
+
+.brand-logo{
+  height:48px;
+  display:block;
+  margin:0 auto 8px;
+  filter:drop-shadow(0 4px 12px rgba(46,139,87,0.12));
+  transition:transform 280ms ease
+}
+
+.brand-logo:hover{
+  transform:scale(1.05)
+}
+
+.brand-name{
+  font-weight:800;
+  color:var(--brown);
+  letter-spacing:2px;
+  font-size:24px;
+  text-decoration:none;
+  display:inline-block;
+  animation:logo-bounce 0.9s cubic-bezier(0.16, 1, 0.3, 1) both;
+  position:relative
+}
+
+@keyframes logo-bounce{
+  0%{
+    opacity:0;
+    transform:translateY(8px) scale(0.95)
+  }
+  60%{
+    transform:translateY(-2px) scale(1.02)
+  }
+  100%{
+    opacity:1;
+    transform:translateY(0) scale(1)
+  }
+}
+
+.brand-name::after{
+  content:'';
+  position:absolute;
+  bottom:-4px;
+  left:50%;
+  transform:translateX(-50%);
+  width:0;
+  height:2px;
+  background:linear-gradient(90deg, var(--green), transparent);
+  transition:width 400ms cubic-bezier(0.16, 1, 0.3, 1);
+  border-radius:2px
+}
+
+.brand-name:hover::after{
+  width:80%
+}
+
+.brand-sub{
+  font-size:12px;
+  color:rgba(111,75,50,0.65);
+  letter-spacing:0.5px;
+  text-transform:uppercase
+}
+
+/* ===== ДЕЙСТВИЯ В ХЕДЕРЕ ===== */
+.header-actions{
+  display:flex;
+  justify-self:end;
+  gap:14px;
+  align-items:center;
+  overflow:visible;
+  animation:actions-entrance 0.7s ease 0.15s both
+}
+
+@keyframes actions-entrance{
+  from{
+    opacity:0;
+    transform:translateY(-8px)
+  }
+  to{
+    opacity:1;
+    transform:translateY(0)
+  }
+}
+
+/* ===== КНОПКА АККАУНТА ===== */
+.btn-account{
+  background:linear-gradient(135deg, rgba(246,239,230,0.8), rgba(255,255,255,0.6));
+  border:2px solid rgba(46,139,87,0.12);
+  padding:10px 18px;
+  border-radius:20px;
+  color:var(--brown);
+  font-weight:700;
+  letter-spacing:0.3px;
+  text-decoration:none;
+  display:inline-block;
+  font-size:13px;
+  cursor:pointer;
+  transition:all 280ms ease;
+  position:relative;
+  overflow:hidden
+}
+
+.btn-account::before{
+  content:'';
+  position:absolute;
+  inset:0;
+  background:linear-gradient(135deg, rgba(46,139,87,0.1), transparent);
+  opacity:0;
+  transition:opacity 280ms ease;
+  border-radius:20px
+}
+
+.btn-account:hover{
+  border-color:var(--green);
+  background:linear-gradient(135deg, var(--beige), #fff);
+  transform:translateY(-3px);
+  box-shadow:0 8px 20px rgba(46,139,87,0.12)
+}
+
+.btn-account:hover::before{
+  opacity:1
+}
+
+/* ===== КНОПКА КОРЗИНЫ ===== */
+.btn-cart{
+  background:linear-gradient(135deg, var(--brown), #5a3d2f);
+  color:var(--beige);
+  border:none;
+  padding:11px 20px;
+  border-radius:20px;
+  font-weight:800;
+  position:relative;
+  display:inline-flex;
+  align-items:center;
+  gap:10px;
+  text-decoration:none;
+  font-size:13px;
+  letter-spacing:0.3px;
+  cursor:pointer;
+  transition:all 280ms cubic-bezier(0.16, 1, 0.3, 1);
+  box-shadow:0 8px 20px rgba(111,75,50,0.12);
+  overflow:hidden
+}
+
+.btn-cart::before{
+  content:'';
+  position:absolute;
+  inset:0;
+  background:linear-gradient(135deg, transparent, rgba(255,255,255,0.15));
+  opacity:0;
+  transition:opacity 280ms ease;
+  border-radius:20px;
+  z-index:0
+}
+
+.btn-cart > *{
+  position:relative;
+  z-index:1
+}
+
+.btn-cart:hover{
+  transform:translateY(-4px);
+  box-shadow:0 14px 32px rgba(111,75,50,0.16);
+  background:linear-gradient(135deg, #4a3228, #3a2620)
+}
+
+.btn-cart:hover::before{
+  opacity:1
+}
+
+.btn-cart .cart-count{
+  background:var(--green);
+  color:#fff;
+  border-radius:999px;
+  padding:4px 10px;
+  font-size:11px;
+  font-weight:800;
+  letter-spacing:0.5px;
+  box-shadow:0 4px 12px rgba(46,139,87,0.2);
+  min-width:24px;
+  text-align:center
+}
+
+/* ===== КОНТАКТ КНОПКА (CTA) ===== */
+.btn-contact{
+  background:linear-gradient(135deg, var(--green), #248a54);
+  color:#fff;
+  border:none;
+  padding:11px 20px;
+  border-radius:20px;
+  font-weight:800;
+  letter-spacing:0.3px;
+  text-decoration:none;
+  display:inline-block;
+  box-shadow:0 8px 20px rgba(46,139,87,0.16);
+  transition:all 280ms cubic-bezier(0.16, 1, 0.3, 1);
+  font-size:13px;
+  cursor:pointer;
+  text-transform:uppercase;
+  position:relative;
+  overflow:hidden
+}
+
+.btn-contact::before{
+  content:'';
+  position:absolute;
+  inset:0;
+  background:linear-gradient(135deg, transparent, rgba(255,255,255,0.2));
+  opacity:0;
+  transition:opacity 280ms ease;
+  border-radius:20px;
+  z-index:0
+}
+
+.btn-contact > *{
+  position:relative;
+  z-index:1
+}
+
+.btn-contact:hover{
+  transform:translateY(-4px);
+  box-shadow:0 14px 32px rgba(46,139,87,0.22);
+  background:linear-gradient(135deg, #2a7a4d, #1f6a40)
+}
+
+.btn-contact:hover::before{
+  opacity:1
+}
+
+.btn-contact:active{
+  transform:translateY(-2px);
+  box-shadow:0 6px 16px rgba(46,139,87,0.12)
+}
+
+/* ===== ABOUT КНОПКА ===== */
+.btn-about{
+  background:linear-gradient(135deg, rgba(246,239,230,0.5), transparent);
+  border:2px solid rgba(111,75,50,0.15);
+  padding:10px 18px;
+  border-radius:20px;
+  color:var(--brown);
+  font-weight:700;
+  margin:0 0;
+  text-decoration:none;
+  transition:all 280ms ease;
+  font-size:13px;
+  letter-spacing:0.3px;
+  cursor:pointer;
+  position:relative;
+  overflow:hidden
+}
+
+.btn-about::before{
+  content:'';
+  position:absolute;
+  inset:0;
+  background:linear-gradient(135deg, var(--beige), rgba(255,255,255,0.8));
+  opacity:0;
+  transition:opacity 280ms ease;
+  border-radius:20px;
+  z-index:-1
+}
+
+.btn-about:hover{
+  border-color:var(--brown);
+  color:var(--green);
+  transform:translateY(-3px);
+  box-shadow:0 8px 16px rgba(111,75,50,0.1)
+}
+
+.btn-about:hover::before{
+  opacity:1
+}
+
+/* ===== АККАУНТ ДРОПДАУН ===== */
+.account-wrap{
+  position:relative;
+  display:inline-block;
+  z-index:10000
+}
+
+.account-toggle{
+  background:linear-gradient(135deg, rgba(246,239,230,0.8), rgba(255,255,255,0.6));
+  border:2px solid rgba(46,139,87,0.12);
+  padding:10px 18px;
+  border-radius:20px;
+  color:var(--brown);
+  font-weight:700;
+  cursor:pointer;
+  font-size:13px;
+  letter-spacing:0.3px;
+  transition:all 280ms ease;
+  font-family:'Poppins', system-ui, Arial
+}
+
+.account-toggle:hover{
+  border-color:var(--green);
+  background:linear-gradient(135deg, var(--beige), #fff);
+  transform:translateY(-2px)
+}
+
+.account-menu{
+  position:absolute;
+  right:0;
+  top:calc(100% + 10px);
+  background:#fff;
+  border-radius:12px;
+  box-shadow:0 16px 48px rgba(18,24,20,0.12);
+  min-width:200px;
+  display:none;
+  flex-direction:column;
+  overflow:hidden;
+  z-index:99999;
+  animation:menu-slide-down 280ms cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  border:1px solid rgba(46,139,87,0.08);
+  pointer-events:auto
+}
+
+@keyframes menu-slide-down{
+  from{
+    opacity:0;
+    transform:translateY(-8px) scale(0.95)
+  }
+  to{
+    opacity:1;
+    transform:translateY(0) scale(1)
+  }
+}
+
+.account-menu a{
+  display:block;
+  padding:13px 16px;
+  color:var(--brown);
+  text-decoration:none;
+  border-bottom:1px solid rgba(0,0,0,0.04);
+  font-weight:600;
+  letter-spacing:0.2px;
+  transition:all 200ms ease;
+  cursor:pointer
+}
+
+.account-menu a:last-child{
+  border-bottom:0
+}
+
+.account-menu a:hover{
+  background:var(--beige);
+  color:var(--green);
+  padding-left:20px
+}
+
+.account-wrap.open .account-menu{
+  display:flex
+}
+
+/* ===== НАВИГАЦИЯ ===== */
+.nav-row{
+  border-top:2px solid rgba(46,139,87,0.08);
+  padding:12px 0;
+  position:relative;
+  z-index:0
+}
+
+.nav-bar{
+  display:flex;
+  gap:32px;
+  justify-content:center;
+  align-items:center;
+  padding:8px 0;
+  animation:nav-fade-in 0.8s ease 0.2s both
+}
+
+@keyframes nav-fade-in{
+  from{
+    opacity:0
+  }
+  to{
+    opacity:1
+  }
+}
+
+.nav-bar a{
+  color:var(--brown);
+  text-decoration:none;
+  font-weight:700;
+  letter-spacing:1px;
+  font-size:12px;
+  text-transform:uppercase;
+  position:relative;
+  padding:8px 4px;
+  transition:all 280ms ease;
+  letter-spacing:0.5px
+}
+
+.nav-bar a::before{
+  content:'';
+  position:absolute;
+  bottom:-8px;
+  left:50%;
+  transform:translateX(-50%) scaleX(0);
+  width:70%;
+  height:3px;
+  background:linear-gradient(90deg, var(--green), transparent);
+  border-radius:3px;
+  transition:transform 280ms cubic-bezier(0.16, 1, 0.3, 1);
+  transform-origin:center
+}
+
+.nav-bar a:hover{
+  color:var(--green);
+  transform:translateY(-2px)
+}
+
+.nav-bar a:hover::before{
+  transform:translateX(-50%) scaleX(1)
+}
+
+.nav-bar a.active{
+  color:var(--green);
+  font-weight:800
+}
+
+.nav-bar a.active::before{
+  transform:translateX(-50%) scaleX(1);
+  background:var(--green);
+  opacity:1
+}
+
+.nav-bar a.promo{
+  color:#e46b8b;
+  font-weight:800;
+  animation:promo-blink 2s ease-in-out infinite
+}
+
+@keyframes promo-blink{
+  0%, 100%{opacity:1}
+  50%{opacity:0.7}
+}
+
+/* ===== АДАПТИВ ===== */
+@media (max-width:1200px){
+  .search-wrap-menu{
+    min-width:200px
+  }
+}
+
+@media (max-width:900px){
+  .top-row{
+    flex-direction:column;
+    align-items:center;
+    padding:12px 0
+  }
+  
+  .phone-info{
+    order:1;
+    width:100%;
+    justify-content:center;
+    gap:12px
+  }
+  
+  .brand-wrap{
+    order:2;
+    margin:8px 0
+  }
+  
+  .header-actions{
+    order:3;
+    width:100%;
+    justify-content:center;
+    gap:10px;
+    margin-top:8px
+  }
+  
+  .brand-logo{
+    height:40px;
+    margin-bottom:6px
+  }
+  
+  .brand-name{
+    font-size:20px;
+    letter-spacing:1px
+  }
+  
+  .nav-bar{
+    gap:20px;
+    font-size:11px
+  }
+}
+
+@media (max-width:640px){
+  .top-row{
+    gap:10px
+  }
+  
+  .phone-info{
+    font-size:12px;
+    gap:6px;
+    flex-wrap:wrap
+  }
+  
+  .brand-logo{
+    height:36px
+  }
+  
+  .brand-name{
+    font-size:18px;
+    letter-spacing:0.5px
+  }
+  
+  .brand-sub{
+    font-size:11px
+  }
+  
+  .header-actions{
+    gap:8px;
+    flex-wrap:wrap
+  }
+  
+  .btn-account,
+  .btn-contact,
+  .btn-cart{
+    padding:9px 12px;
+    font-size:12px;
+    border-radius:16px
+  }
+  
+  .nav-bar{
+    gap:12px;
+    padding:6px 0;
+    overflow-x:auto
+  }
+}

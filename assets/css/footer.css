@@ -1,0 +1,389 @@
+/* ===== STICKY FOOTER LAYOUT ===== */
+html, body {
+  height:100%
+}
+
+body {
+  display:flex;
+  flex-direction:column;
+  min-height:100vh;
+  margin:0
+}
+
+main, .page-content, .content {
+  flex:1 0 auto
+}
+
+.site-footer{
+  flex-shrink:0
+}
+
+/* ===== КРАСИВЫЙ ФУТЕР ===== */
+.site-footer{
+  background:linear-gradient(135deg, #4a3228 0%, #3a2620 50%, #2a1f18 100%);
+  color:var(--beige);
+  padding:56px 0 32px;
+  margin-top:60px;
+  position:relative;
+  overflow:hidden;
+  animation:footer-entrance 0.9s ease both;
+  border-top:3px solid var(--green);
+  box-shadow:0 -8px 32px rgba(46,139,87,0.08) inset
+}
+
+/* Декоративные линии сверху */
+.site-footer::before{
+  content:'';
+  position:absolute;
+  left:0;
+  right:0;
+  top:0;
+  height:2px;
+  background:linear-gradient(90deg, transparent, var(--green), transparent);
+  opacity:0.6
+}
+
+.site-footer::after{
+  content:'';
+  position:absolute;
+  inset:0;
+  background:radial-gradient(circle at 20% 50%, rgba(46,139,87,0.04) 0%, transparent 50%);
+  pointer-events:none
+}
+
+@keyframes footer-entrance{
+  from{
+    opacity:0;
+    transform:translateY(20px)
+  }
+  to{
+    opacity:1;
+    transform:translateY(0)
+  }
+}
+
+/* ===== ВНУТРЕННИЙ КОНТЕЙНЕР ===== */
+.footer-inner{
+  display:flex;
+  gap:48px;
+  align-items:flex-start;
+  justify-content:space-between;
+  max-width:1180px;
+  margin:0 auto;
+  padding:0 18px;
+  position:relative;
+  z-index:2;
+  animation:footer-content-fade 0.9s ease 0.1s both
+}
+
+@keyframes footer-content-fade{
+  from{
+    opacity:0;
+    transform:translateY(16px)
+  }
+  to{
+    opacity:1;
+    transform:translateY(0)
+  }
+}
+
+/* ===== КОЛОНКИ ФУТЕРА ===== */
+.footer-col{
+  flex:1;
+  min-width:200px
+}
+
+.footer-col h4{
+  margin:0 0 16px 0;
+  color:#fff;
+  letter-spacing:1px;
+  font-size:14px;
+  font-weight:800;
+  text-transform:uppercase;
+  position:relative;
+  padding-bottom:12px;
+  display:inline-block
+}
+
+.footer-col h4::after{
+  content:'';
+  position:absolute;
+  bottom:0;
+  left:0;
+  width:40px;
+  height:3px;
+  background:linear-gradient(90deg, var(--green), transparent);
+  border-radius:3px
+}
+
+.footer-col p{
+  margin:8px 0;
+  color:rgba(245,239,231,0.88);
+  line-height:1.6;
+  font-size:14px
+}
+
+/* ===== ССЫЛКИ В ФУТЕРЕ ===== */
+.footer-col a{
+  color:rgba(245,239,231,0.9);
+  text-decoration:none;
+  opacity:0.9;
+  transition:all 280ms ease;
+  position:relative;
+  display:inline-block;
+  font-weight:500;
+  letter-spacing:0.3px
+}
+
+.footer-col a::before{
+  content:'';
+  position:absolute;
+  bottom:-2px;
+  left:0;
+  width:0;
+  height:2px;
+  background:var(--green);
+  transition:width 280ms ease;
+  border-radius:2px
+}
+
+.footer-col a:hover{
+  opacity:1;
+  color:#fff;
+  transform:translateX(4px)
+}
+
+.footer-col a:hover::before{
+  width:100%
+}
+
+/* ===== АККАУНТ КОЛОНКА ===== */
+.footer-account-col{
+  display:flex;
+  flex-direction:column;
+  align-items:flex-start;
+  gap:12px
+}
+
+.footer-login{
+  display:inline-block;
+  padding:11px 18px;
+  border-radius:10px;
+  background:rgba(46,139,87,0.15);
+  color:var(--beige);
+  text-decoration:none;
+  border:2px solid rgba(46,139,87,0.3);
+  font-weight:700;
+  font-size:13px;
+  letter-spacing:0.3px;
+  transition:all 280ms ease;
+  cursor:pointer
+}
+
+.footer-login:hover{
+  background:rgba(46,139,87,0.25);
+  border-color:rgba(46,139,87,0.6);
+  transform:translateY(-3px);
+  box-shadow:0 8px 20px rgba(46,139,87,0.2)
+}
+
+/* АККАУНТ ДРОПДАУН */
+.footer-account-col .account-wrap{
+  position:relative;
+  width:100%
+}
+
+.footer-account-col .account-toggle{
+  background:linear-gradient(135deg, rgba(46,139,87,0.2), rgba(46,139,87,0.1));
+  border:2px solid rgba(46,139,87,0.3);
+  color:var(--beige);
+  padding:11px 18px;
+  border-radius:10px;
+  font-weight:700;
+  cursor:pointer;
+  width:100%;
+  text-align:left;
+  font-size:13px;
+  letter-spacing:0.3px;
+  transition:all 280ms ease;
+  font-family:'Poppins', system-ui, Arial
+}
+
+.footer-account-col .account-toggle:hover{
+  background:rgba(46,139,87,0.3);
+  border-color:rgba(46,139,87,0.5);
+  transform:translateY(-2px)
+}
+
+.footer-account-col .account-menu{
+  position:absolute;
+  left:0;
+  top:calc(100% + 8px);
+  background:#fff;
+  color:var(--brown);
+  border-radius:12px;
+  box-shadow:0 16px 48px rgba(0,0,0,0.15);
+  display:none;
+  flex-direction:column;
+  min-width:200px;
+  z-index:9999;
+  overflow:hidden;
+  animation:menu-pop 280ms cubic-bezier(0.16, 1, 0.3, 1) forwards
+}
+
+@keyframes menu-pop{
+  from{
+    opacity:0;
+    transform:translateY(-8px) scale(0.95)
+  }
+  to{
+    opacity:1;
+    transform:translateY(0) scale(1)
+  }
+}
+
+.footer-account-col .account-menu a{
+  padding:12px 16px;
+  border-bottom:1px solid rgba(0,0,0,0.04);
+  color:var(--brown);
+  text-decoration:none;
+  font-weight:600;
+  letter-spacing:0.2px;
+  transition:all 200ms ease
+}
+
+.footer-account-col .account-menu a:last-child{
+  border-bottom:0
+}
+
+.footer-account-col .account-menu a:hover{
+  background:var(--beige);
+  color:var(--green);
+  padding-left:20px
+}
+
+.footer-account-col .account-wrap.open .account-menu{
+  display:flex
+}
+
+.footer-account-col .account-wrap, .footer-account-col .account-menu {
+  z-index:9999
+}
+
+/* ===== CTA КНОПКА В ФУТЕРЕ ===== */
+.footer-cta{
+  display:inline-block;
+  margin-top:12px;
+  padding:12px 24px;
+  border-radius:10px;
+  background:linear-gradient(135deg, var(--green), #248a54);
+  color:#fff;
+  text-decoration:none;
+  font-weight:800;
+  font-size:13px;
+  letter-spacing:0.4px;
+  text-transform:uppercase;
+  transition:all 280ms ease;
+  box-shadow:0 8px 20px rgba(46,139,87,0.2);
+  cursor:pointer;
+  border:0
+}
+
+.footer-cta:hover{
+  transform:translateY(-4px);
+  box-shadow:0 14px 32px rgba(46,139,87,0.28);
+  background:linear-gradient(135deg, #2a7a4d, #1f6a40)
+}
+
+.footer-cta:active{
+  transform:translateY(-2px);
+  box-shadow:0 6px 16px rgba(46,139,87,0.15)
+}
+
+/* ===== НИЖНЯЯ ЧАСТЬ ФУТЕРА ===== */
+.footer-bottom{
+  text-align:center;
+  padding:24px 0 0 0;
+  font-size:13px;
+  color:rgba(245,239,231,0.75);
+  margin-top:32px;
+  padding-top:32px;
+  border-top:1px solid rgba(46,139,87,0.2);
+  max-width:1180px;
+  margin-left:auto;
+  margin-right:auto;
+  padding-left:18px;
+  padding-right:18px;
+  position:relative;
+  z-index:2;
+  letter-spacing:0.3px;
+  line-height:1.6
+}
+
+.footer-bottom a{
+  color:rgba(245,239,231,0.9);
+  text-decoration:none;
+  transition:color 280ms ease;
+  font-weight:600
+}
+
+.footer-bottom a:hover{
+  color:#fff
+}
+
+/* ===== АДАПТИВ ===== */
+@media (max-width:1000px){
+  .footer-inner{
+    gap:32px
+  }
+}
+
+@media (max-width:800px){
+  .footer-inner{
+    flex-direction:column;
+    gap:28px
+  }
+  
+  .site-footer{
+    padding:40px 0 24px
+  }
+  
+  .footer-col{
+    width:100%
+  }
+  
+  .footer-account-col{
+    width:100%
+  }
+  
+  .footer-login,
+  .footer-account-col .account-toggle{
+    width:100%
+  }
+}
+
+@media (max-width:480px){
+  .site-footer{
+    padding:32px 0 20px;
+    margin-top:40px
+  }
+  
+  .footer-inner{
+    padding:0 12px;
+    gap:20px
+  }
+  
+  .footer-col h4{
+    font-size:12px;
+    margin-bottom:12px
+  }
+  
+  .footer-col p{
+    font-size:13px
+  }
+  
+  .footer-bottom{
+    padding:16px 12px 0;
+    font-size:12px
+  }
+}

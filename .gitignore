@@ -1,0 +1,75 @@
+# IDE и текстові редактори
+.vscode/
+.idea/
+*.swp
+*.swo
+*.swn
+*.sublime-project
+*.sublime-workspace
+.DS_Store
+Thumbs.db
+*.code-workspace
+
+# Composer
+vendor/
+composer.lock
+
+# Конфіг
+.env
+.env.local
+.env.*.local
+config/db.php
+config/stripe.php
+
+# Сесії
+sessions/
+tmp/
+temp/
+cache/
+*.tmp
+*.log
+
+# Файли та медіа
+Images/
+uploads/
+/public/uploads/
+
+node_modules/
+npm-debug.log
+yarn-error.log
+
+# OS файли
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+
+# Резервні копії
+*.bak
+*.backup
+*~
+
+# Файли проекта
+.project
+.classpath
+*.sublime-project
+*.sublime-workspace
+
+# PhpStorm
+.phpstorm.meta.php
+.php_cs.cache
+
+# Тестові файли
+test_output/
+coverage/
+
+# Локальні конфігурації
+local.php
+config.local.php
+
+# Інше
+.htaccess.local
+debug.log

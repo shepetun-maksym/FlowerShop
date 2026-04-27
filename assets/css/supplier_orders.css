@@ -1,0 +1,130 @@
+   .order-card {
+      border: 1px solid #ddd;
+      padding: 20px;
+      margin: 15px 0;
+      border-radius: 8px;
+      background: #f9f9f9;
+    }
+    .order-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 15px;
+      padding-bottom: 10px;
+      border-bottom: 2px solid #ddd;
+    }
+    .order-status {
+      padding: 5px 12px;
+      border-radius: 20px;
+      font-weight: bold;
+      font-size: 0.9em;
+    }
+    .status-pending { background: #fff3cd; color: #856404; }
+    .status-confirmed { background: #cfe2ff; color: #084298; }
+    .status-delivered { background: #d1e7dd; color: #0f5132; }
+    .status-cancelled { background: #f8d7da; color: #842029; }
+    .order-items-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 15px 0;
+    }
+    .order-items-table td, .order-items-table th {
+      padding: 10px;
+      border: 1px solid #ddd;
+      text-align: left;
+    }
+    .order-items-table th {
+      background: #f0f0f0;
+      font-weight: bold;
+    }
+    .order-actions {
+      display: flex;
+      gap: 10px;
+      margin-top: 15px;
+    }
+    .toggle-buttons {
+      display: flex;
+      gap: 10px;
+      margin-bottom: 30px;
+    }
+    .toggle-btn {
+      padding: 12px 24px;
+      border: 2px solid #2f8f4a;
+      background: transparent;
+      color: #2f8f4a;
+      border-radius: 8px;
+      cursor: pointer;
+      font-weight: 600;
+      font-size: 1em;
+      transition: all 0.3s ease;
+    }
+    .toggle-btn.active {
+      background: #2f8f4a;
+      color: white;
+    }
+    .toggle-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba(47, 143, 74, 0.2);
+    }
+    .stats-container {
+      display: none;
+    }
+    .stats-container.active {
+      display: block;
+    }
+    .orders-container {
+      display: block;
+    }
+    .orders-container.hidden {
+      display: none;
+    }
+    .stats-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 20px;
+      margin-bottom: 30px;
+    }
+    .stat-card {
+      background: linear-gradient(135deg, #f0f8f0, #fff);
+      border-left: 4px solid #2f8f4a;
+      padding: 20px;
+      border-radius: 8px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+    }
+    .stat-card h3 {
+      margin: 0 0 10px 0;
+      color: #2f8f4a;
+      font-size: 0.9em;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+    .stat-value {
+      font-size: 2em;
+      font-weight: bold;
+      color: #6b4c3b;
+    }
+    .stat-value.currency::after {
+      content: ' грн';
+      font-size: 0.6em;
+      margin-left: 5px;
+    }
+    .products-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-bottom: 20px;
+    }
+    .products-table th {
+      background: linear-gradient(90deg, rgba(47,143,74,0.1), transparent);
+      padding: 12px;
+      text-align: left;
+      font-weight: 600;
+      color: #2f8f4a;
+      border-bottom: 2px solid #2f8f4a;
+    }
+    .products-table td {
+      padding: 12px;
+      border-bottom: 1px solid #e0e0e0;
+    }
+    .products-table tr:hover {
+      background: #f9f9f9;
+    }

@@ -1,0 +1,10 @@
+    .manager-section { margin-bottom: 40px; }
+    .manager-table { width: 100%; border-collapse: collapse; margin-top: 20px; }
+    .manager-table th, .manager-table td { border: 1px solid #ddd; padding: 8px; text-align: left; }
+    .manager-table th { background-color: #f2f2f2; }
+    .order-items-table { width: 100%; border-collapse: collapse; margin-top: 8px; }
+    .order-items-table th, .order-items-table td { border: 1px solid #eee; padding: 4px 6px; font-size: 13px; }
+    .order-items-table th { background: #fafafa; }
+    .status-select { padding: 4px 8px; }
+    .btn { padding: 5px 10px; margin: 2px; cursor: pointer; }
+    .btn-primary { background-color: #007bff; color: white; border: none; }
