@@ -6,7 +6,7 @@ const GREENHOUSE_LOCATION_ID = 1;
 
 function supplierOrdersController(): array {
     if (session_status() !== PHP_SESSION_ACTIVE) session_start();
-    $result = ['errors' => [], 'success' => false, 'orders' => [], 'greenhouse' => null];
+    $result = ['errors' => [], 'success' => false, 'orders' => [], 'greenhouse' => null, 'greenhouses' => [], 'stats' => null];
 
     if (empty($_SESSION['user_id'])) {
         header('Location: login.php'); exit;
@@ -22,23 +22,46 @@ function supplierOrdersController(): array {
             return $result;
         }
 
-        // отримати теплицю постачальника
-        $ghStmt = $pdo->prepare("SELECT id, name FROM greenhouses WHERE supplier_id = :supplier_id LIMIT 1");
+        // отримати всі теплиці постачальника
+        $ghStmt = $pdo->prepare("SELECT id, name FROM greenhouses WHERE supplier_id = :supplier_id ORDER BY name");
         $ghStmt->execute([':supplier_id' => $userId]);
-        $greenhouse = $ghStmt->fetch(PDO::FETCH_ASSOC);
+        $greenhouses = $ghStmt->fetchAll(PDO::FETCH_ASSOC);
+        
+        $result['greenhouses'] = $greenhouses;
 
-        if (!$greenhouse) {
+        // Отримати обрану теплицю або першу за замовчуванням
+        $selectedGreenhouseId = null;
+        if (isset($_GET['greenhouse_id'])) {
+            $selectedGreenhouseId = (int)$_GET['greenhouse_id'];
+            // Перевіримо що теплиця належить цьому постачальнику
+            $checkStmt = $pdo->prepare("SELECT id FROM greenhouses WHERE id = :id AND supplier_id = :supplier_id");
+            $checkStmt->execute([':id' => $selectedGreenhouseId, ':supplier_id' => $userId]);
+            if (!$checkStmt->fetch()) {
+                $selectedGreenhouseId = null;
+            }
+        }
+        
+        if (!$selectedGreenhouseId && !empty($greenhouses)) {
+            $selectedGreenhouseId = (int)$greenhouses[0]['id'];
+        }
+
+        if (!$selectedGreenhouseId) {
             $result['errors'][] = 'Теплиця не знайдена для цього постачальника.';
             return $result;
         }
 
+        // отримати обрану теплицю
+        $ghStmt = $pdo->prepare("SELECT id, name FROM greenhouses WHERE id = :id AND supplier_id = :supplier_id");
+        $ghStmt->execute([':id' => $selectedGreenhouseId, ':supplier_id' => $userId]);
+        $greenhouse = $ghStmt->fetch(PDO::FETCH_ASSOC);
+
         $result['greenhouse'] = $greenhouse;
 
         // отримати замовлення теплиці
-        $result['orders'] = getGreenhouseOrders($pdo, $greenhouse['id']);
+        $result['orders'] = getGreenhouseOrders($pdo, $selectedGreenhouseId);
         
         // отримати статистику продажів
-        $result['stats'] = getSupplierSalesStats($pdo, $greenhouse['id']);
+        $result['stats'] = getSupplierSalesStats($pdo, $selectedGreenhouseId);
 
         // обробка post запитів
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
@@ -52,10 +75,10 @@ function supplierOrdersController(): array {
                 if (!in_array($newStatus, $validStatuses)) {
                     $result['errors'][] = 'Невірний статус.';
                 } else {
-                    $statusResult = updateGreenhouseOrderStatus($pdo, $orderId, $newStatus, $greenhouse['id']);
+                    $statusResult = updateGreenhouseOrderStatus($pdo, $orderId, $newStatus, $selectedGreenhouseId);
                     if ($statusResult === true) {
                         $result['success'] = 'Статус оновлено.';
-                        $result['orders'] = getGreenhouseOrders($pdo, $greenhouse['id']);
+                        $result['orders'] = getGreenhouseOrders($pdo, $selectedGreenhouseId);
                     } elseif ($statusResult === 'delivered') {
                         $result['errors'][] = 'Неможливо змінити статус. Замовлення вже доставлено.';
                     } else {
@@ -64,10 +87,10 @@ function supplierOrdersController(): array {
                 }
             } elseif ($action === 'confirm_order') {
                 $orderId = (int)($_POST['order_id'] ?? 0);
-                $confirmResult = confirmGreenhouseOrder($pdo, $orderId, $greenhouse['id']);
+                $confirmResult = confirmGreenhouseOrder($pdo, $orderId, $selectedGreenhouseId);
                 if ($confirmResult === true) {
                     $result['success'] = 'Замовлення підтверджено.';
-                    $result['orders'] = getGreenhouseOrders($pdo, $greenhouse['id']);
+                    $result['orders'] = getGreenhouseOrders($pdo, $selectedGreenhouseId);
                 } elseif ($confirmResult === 'delivered') {
                     $result['errors'][] = 'Неможливо змінити статус. Замовлення вже доставлено.';
                 } else {
@@ -75,11 +98,11 @@ function supplierOrdersController(): array {
                 }
             } elseif ($action === 'deliver_order') {
                 $orderId = (int)($_POST['order_id'] ?? 0);
-                error_log("deliver_order called: orderId={$orderId}, greenhouse={$greenhouse['id']}");
+                error_log("deliver_order called: orderId={$orderId}, greenhouse={$selectedGreenhouseId}");
                 
-                if (deliverGreenhouseOrder($pdo, $orderId, $greenhouse['id'])) {
+                if (deliverGreenhouseOrder($pdo, $orderId, $selectedGreenhouseId)) {
                     $result['success'] = 'Замовлення доставлено. Товари перенесені в магазин.';
-                    $result['orders'] = getGreenhouseOrders($pdo, $greenhouse['id']);
+                    $result['orders'] = getGreenhouseOrders($pdo, $selectedGreenhouseId);
                     error_log("deliverGreenhouseOrder succeeded for order {$orderId}");
                 } else {
                     $result['errors'][] = 'Помилка при доставці.';
@@ -87,10 +110,10 @@ function supplierOrdersController(): array {
                 }
             } elseif ($action === 'cancel_order') {
                 $orderId = (int)($_POST['order_id'] ?? 0);
-                $cancelResult = cancelGreenhouseOrder($pdo, $orderId, $greenhouse['id']);
+                $cancelResult = cancelGreenhouseOrder($pdo, $orderId, $selectedGreenhouseId);
                 if ($cancelResult === true) {
                     $result['success'] = 'Замовлення скасовано.';
-                    $result['orders'] = getGreenhouseOrders($pdo, $greenhouse['id']);
+                    $result['orders'] = getGreenhouseOrders($pdo, $selectedGreenhouseId);
                 } elseif ($cancelResult === 'delivered') {
                     $result['errors'][] = 'Неможливо скасувати. Замовлення вже доставлено.';
                 } else {

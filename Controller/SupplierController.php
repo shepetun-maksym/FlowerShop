@@ -5,7 +5,7 @@ require_once __DIR__ . '/../Model/Product.php';
 
 function supplierController(): array {
     if (session_status() !== PHP_SESSION_ACTIVE) session_start();
-    $result = ['errors' => [], 'success' => false, 'inventory' => [], 'images' => [], 'greenhouse' => null];
+    $result = ['errors' => [], 'success' => false, 'inventory' => [], 'images' => [], 'greenhouse' => null, 'greenhouses' => []];
 
     if (empty($_SESSION['user_id'])) {
         header('Location: login.php'); exit;
@@ -20,15 +20,38 @@ function supplierController(): array {
             return $result;
         }
 
-        // отримати теплицю постачальника
-        $ghStmt = $pdo->prepare("SELECT id, name FROM greenhouses WHERE supplier_id = :supplier_id LIMIT 1");
+        // отримати всі теплиці постачальника
+        $ghStmt = $pdo->prepare("SELECT id, name FROM greenhouses WHERE supplier_id = :supplier_id ORDER BY name");
         $ghStmt->execute([':supplier_id' => $userId]);
-        $greenhouse = $ghStmt->fetch(PDO::FETCH_ASSOC);
+        $greenhouses = $ghStmt->fetchAll(PDO::FETCH_ASSOC);
+        
+        $result['greenhouses'] = $greenhouses;
 
-        if (!$greenhouse) {
+        // Отримати обрану теплицю або першу за замовчуванням
+        $selectedGreenhouseId = null;
+        if (isset($_GET['greenhouse_id'])) {
+            $selectedGreenhouseId = (int)$_GET['greenhouse_id'];
+            // Перевіримо що теплиця належить цьому постачальнику
+            $checkStmt = $pdo->prepare("SELECT id FROM greenhouses WHERE id = :id AND supplier_id = :supplier_id");
+            $checkStmt->execute([':id' => $selectedGreenhouseId, ':supplier_id' => $userId]);
+            if (!$checkStmt->fetch()) {
+                $selectedGreenhouseId = null;
+            }
+        }
+        
+        if (!$selectedGreenhouseId && !empty($greenhouses)) {
+            $selectedGreenhouseId = (int)$greenhouses[0]['id'];
+        }
+
+        if (!$selectedGreenhouseId) {
             $result['errors'][] = 'Теплиця не знайдена для цього постачальника.';
             return $result;
         }
+
+        // отримати обрану теплицю
+        $ghStmt = $pdo->prepare("SELECT id, name FROM greenhouses WHERE id = :id AND supplier_id = :supplier_id");
+        $ghStmt->execute([':id' => $selectedGreenhouseId, ':supplier_id' => $userId]);
+        $greenhouse = $ghStmt->fetch(PDO::FETCH_ASSOC);
 
         $result['greenhouse'] = $greenhouse;
         $greenhouseId = (int)$greenhouse['id'];

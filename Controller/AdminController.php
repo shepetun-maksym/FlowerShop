@@ -543,9 +543,15 @@ function assignSupplierToGreenhouse(PDO $pdo, int $greenhouseId, ?int $supplierI
 
 //Додати нову теплицю
 function addGreenhouse(PDO $pdo, string $name, string $address, string $phone): bool {
-    $sql = "INSERT INTO greenhouses (name, address, phone, is_active) VALUES (:name, :address, :phone, true)";
+    // Отримати першого доступного постачальника
+    $suppliersStmt = $pdo->prepare("SELECT id FROM users WHERE role = 'SUPPLIER' LIMIT 1");
+    $suppliersStmt->execute();
+    $supplier = $suppliersStmt->fetch(PDO::FETCH_ASSOC);
+    $supplierId = $supplier ? (int)$supplier['id'] : 1; // Якщо немає постачальників, використовуємо ID 1
+    
+    $sql = "INSERT INTO greenhouses (name, address, phone, is_active, supplier_id) VALUES (:name, :address, :phone, true, :supplier_id)";
     $stmt = $pdo->prepare($sql);
-    return $stmt->execute([':name' => $name, ':address' => $address, ':phone' => $phone]);
+    return $stmt->execute([':name' => $name, ':address' => $address, ':phone' => $phone, ':supplier_id' => $supplierId]);
 }
 
 //Додати новий магазин

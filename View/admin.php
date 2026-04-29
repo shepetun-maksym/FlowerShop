@@ -301,7 +301,15 @@ if (session_status() !== PHP_SESSION_ACTIVE) session_start();
         </tr>
       </thead>
       <tbody>
-        <?php foreach ($ctx['products'] as $product): ?>
+        <?php 
+          // Сортування: товари з наявністю спочатку, потім з нульовою кількістю
+          usort($ctx['products'], function($a, $b) {
+              if ($a['stock'] > 0 && $b['stock'] == 0) return -1;
+              if ($a['stock'] == 0 && $b['stock'] > 0) return 1;
+              return 0;
+          });
+          foreach ($ctx['products'] as $product): 
+        ?>
           <?php
             if (!empty($product['image'])) {
                 $imgRaw = $product['image'];
@@ -323,7 +331,7 @@ if (session_status() !== PHP_SESSION_ACTIVE) session_start();
             <td><?php echo htmlspecialchars($product['flower_name']); ?></td>
             <td><?php echo htmlspecialchars($product['description']); ?></td>
             <td><?php echo htmlspecialchars($product['price']); ?></td>
-            <td><?php echo htmlspecialchars($product['stock']); ?></td>
+            <td style="<?php echo $product['stock'] == 0 ? 'color: red; font-weight: bold;' : ''; ?>"><?php echo htmlspecialchars($product['stock']); ?></td>
             <td><?php echo htmlspecialchars($product['stores'] ?? 'Немає'); ?></td>
             <td><?php echo htmlspecialchars($product['discount_percentage'] ? $product['discount_percentage'] . '%' : 'Немає'); ?></td>
             <td><?php echo $product['is_active'] ? 'Так' : 'Ні'; ?></td>

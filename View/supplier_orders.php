@@ -36,6 +36,19 @@ $ctx = supplierOrdersController();
 <main class="container" style="padding:40px 18px">
   <h1>Замовлення від магазину</h1>
   
+  <?php if (!empty($ctx['greenhouses']) && count($ctx['greenhouses']) > 1): ?>
+    <div style="margin-bottom: 20px; padding: 15px; background: #f0f8f0; border-radius: 8px;">
+      <label for="greenhouse-selector" style="font-weight: bold; margin-right: 10px;">Виберіть теплицю:</label>
+      <select id="greenhouse-selector" style="padding: 8px; border: 1px solid #ccc; border-radius: 4px; font-size: 14px;" onchange="window.location.href = '?greenhouse_id=' + this.value">
+        <?php foreach ($ctx['greenhouses'] as $gh): ?>
+          <option value="<?php echo $gh['id']; ?>" <?php echo ($ctx['greenhouse']['id'] == $gh['id']) ? 'selected' : ''; ?>>
+            <?php echo htmlspecialchars($gh['name']); ?>
+          </option>
+        <?php endforeach; ?>
+      </select>
+    </div>
+  <?php endif; ?>
+  
   <?php if (!empty($ctx['errors'])): ?>
     <div class="errors"><ul><?php foreach ($ctx['errors'] as $e) echo '<li>'.htmlspecialchars($e).'</li>'; ?></ul></div>
   <?php endif; ?>
