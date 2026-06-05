@@ -159,7 +159,7 @@ $orders = $ctx['orders'] ?? [];
             <tr>
               <td style="padding:6px 8px;"> <?php echo htmlspecialchars($item['flower_name']); ?> </td>
               <td style="padding:6px 8px;"> <?php echo getCategoryLabel($item['category']); ?> </td>
-              <td style="padding:6px 8px;"> <?php echo htmlspecialchars($item['description']); ?> </td>
+              <td style="padding:6px 8px;max-width:300px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;"> <?php echo htmlspecialchars($item['description']); ?> </td>
               <td style="padding:6px 8px;"> <?php echo $item['discount_pct'] ? $item['discount_pct'] . '%' : '—'; ?> </td>
               <td style="padding:6px 8px;"> <?php echo $item['quantity']; ?> </td>
               <td style="padding:6px 8px;"> <?php echo number_format($item['price_at_purchase'], 2); ?> грн </td>

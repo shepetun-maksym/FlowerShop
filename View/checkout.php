@@ -238,7 +238,7 @@ payBtn.addEventListener('click', async () => {
   const { error } = await stripe.confirmPayment({
     elements,
     confirmParams: {
-      return_url: `${location.origin}/View/payment_success.php?order_id=<?php echo $orderId; ?>`
+      return_url: `${location.origin}${location.pathname.substring(0, location.pathname.lastIndexOf('/'))}/payment_success.php?order_id=<?php echo $orderId; ?>`
     }
   });
 

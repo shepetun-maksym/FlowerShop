@@ -61,7 +61,13 @@ $products = loadProductList(32);
 				$category = htmlspecialchars($categoryLabel);
 				$description_full = htmlspecialchars($p['description'] ?? '');
 			$stock = isset($p['stock']) ? (int)$p['stock'] : 0;
-			$stockStatus = $stock > 0 ? 'є в наявності' : 'немає в наявності';
+			if ($stock == 0) {
+				$stockStatus = 'немає в наявності';
+			} elseif ($stock < 15) {
+				$stockStatus = 'закінчується';
+			} else {
+				$stockStatus = 'є в наявності';
+			}
 
 				$desc_preview = strlen($description_full) > 120 ? mb_substr($description_full,0,120) . '…' : $description_full;
 				
@@ -110,7 +116,7 @@ $products = loadProductList(32);
 				<div class="category-badge"><?php echo $category ? $category : '—'; ?></div>
 				<div class="product-title"><?php echo $name; ?></div>
 				<div class="product-desc"><?php echo $desc_preview; ?></div>
-			<div class="stock-status" style="font-size: 0.9em; color: <?php echo $stock > 0 ? '#388e3c' : '#d32f2f'; ?>; margin: 8px 0;">
+			<div class="stock-status<?php echo $stock > 0 && $stock < 15 ? ' stock-ending' : ''; ?>">
 				<?php echo $stockStatus; ?>
 			</div>
 			<?php if ($discountName): ?>

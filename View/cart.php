@@ -92,6 +92,7 @@ if (session_status() !== PHP_SESSION_ACTIVE) session_start();
                 <span class="cart-item-meta-label">Знижка</span>
                 <span class="cart-item-meta-value"><?php echo $item['discount'] ? $item['discount'].'%' : '—'; ?></span>
               </div>
+              <?php if (!empty($ctx['user']) && in_array($ctx['user']['role'], ['MANAGER', 'ADMIN', 'SUPPLIER'])): ?>
               <div class="cart-item-meta-item">
                 <span class="cart-item-meta-label">На складі</span>
                 <span class="cart-item-meta-value <?php echo $item['available_stock'] > 0 ? 'stock-ok' : 'stock-low'; ?>">
@@ -101,6 +102,7 @@ if (session_status() !== PHP_SESSION_ACTIVE) session_start();
                   <?php endif; ?>
                 </span>
               </div>
+              <?php endif; ?>
             </div>
           </div>
 

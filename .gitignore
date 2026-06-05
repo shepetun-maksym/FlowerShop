@@ -10,10 +10,6 @@
 Thumbs.db
 *.code-workspace
 
-# Composer
-vendor/
-composer.lock
-
 # Конфіг
 .env
 .env.local

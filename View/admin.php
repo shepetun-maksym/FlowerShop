@@ -329,7 +329,7 @@ if (session_status() !== PHP_SESSION_ACTIVE) session_start();
             <td><img src="<?php echo htmlspecialchars($imgPath); ?>" alt="" class="admin-thumb"></td>
             <td><?php echo htmlspecialchars($product['category']); ?></td>
             <td><?php echo htmlspecialchars($product['flower_name']); ?></td>
-            <td><?php echo htmlspecialchars($product['description']); ?></td>
+            <td style="max-width:300px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;"><?php echo htmlspecialchars($product['description']); ?></td>
             <td><?php echo htmlspecialchars($product['price']); ?></td>
             <td style="<?php echo $product['stock'] == 0 ? 'color: red; font-weight: bold;' : ''; ?>"><?php echo htmlspecialchars($product['stock']); ?></td>
             <td><?php echo htmlspecialchars($product['stores'] ?? 'Немає'); ?></td>

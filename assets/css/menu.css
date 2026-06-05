@@ -207,7 +207,7 @@
 
 /* ===== СТАТУС НАЛИЧИЯ ===== */
 .stock-status{
-  font-size:11px;
+  font-size:16px;
   font-weight:600;
   margin:8px 0 6px;
   letter-spacing:0.3px;
@@ -216,6 +216,10 @@
 
 .stock-status{
   color:#388e3c !important
+}
+
+.stock-status.stock-ending{
+  color:#f57c00 !important
 }
 
 .card[data-stock="0"] .stock-status{

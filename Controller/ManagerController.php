@@ -42,7 +42,7 @@ function managerController(): array {
                     require_once __DIR__ . '/../Controller/CartController.php';
                     foreach ($orderItems as $item) {
                         if (!decrementProductStock($pdo, $item['product_id'], $item['quantity'])) {
-                            throw new Exception("Помилка при зменшенні запасів для товара ID {$item['product_id']}");
+                            throw new Exception("Не вистачає продукції на складі, зверніться до адміністратора для замовлення у постачальника");
                         }
                     }
                 }

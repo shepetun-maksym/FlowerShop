@@ -21,5 +21,6 @@ main.container{padding:40px 18px;}
 .order-items-table{width:100%;border-collapse:collapse;margin-top:8px;}
 .order-items-table th, .order-items-table td{border:1px solid #eee;padding:4px 6px;font-size:13px;}
 .order-items-table th{background:#fafafa;}
+.order-items-table td:nth-child(3){max-width:300px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
 .order-total{text-align:right;margin-top:8px;font-weight:600;}
 .cancel-btn{background:#f44336;color:#fff;border:none;padding:4px 14px;border-radius:5px;cursor:pointer;}

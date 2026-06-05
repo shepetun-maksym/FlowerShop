@@ -128,7 +128,7 @@ if (session_status() !== PHP_SESSION_ACTIVE) session_start();
               <td><img src="<?php echo htmlspecialchars($imgPath); ?>" alt="" class="admin-thumb"></td>
               <td><?php echo getCategoryLabel($item['category']); ?></td>
               <td><?php echo htmlspecialchars($item['flower_name']); ?></td>
-              <td><?php echo htmlspecialchars($item['description']); ?></td>
+              <td style="max-width:300px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;"><?php echo htmlspecialchars($item['description']); ?></td>
               <td><?php echo number_format((float)$item['price'], 2); ?> грн</td>
               <td style="<?php echo $item['quantity'] == 0 ? 'color: red; font-weight: bold;' : ''; ?>"><?php echo htmlspecialchars($item['quantity']); ?> шт.</td>
               <td class="product-actions">
